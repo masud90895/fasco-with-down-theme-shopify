@@ -1,0 +1,377 @@
+<section class="page-width">
+  <div
+    id="ImageCarousel-{{ section.id }}"
+    class="relative w-full overflow-hidden"
+    data-carousel
+    data-auto-rotate="{{ section.settings.auto_rotate }}"
+    data-rotate-interval="{{ section.settings.rotate_interval | times: 1000 }}"
+  >
+    <div
+      class="relative h-full w-full"
+      style="height: {% if section.settings.image_height == 'small' %}300px{% elsif section.settings.image_height == 'medium' %}400px{% elsif section.settings.image_height == 'large' %}800px{% else %}auto{% endif %};"
+    >
+      {% for block in section.blocks %}
+        {% if block.type == 'slide' %}
+          <div
+            class="carousel-slide absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out {% if forloop.first %}opacity-100{% else %}opacity-0{% endif %}"
+            data-slide="{{ forloop.index0 }}"
+          >
+            {% if block.settings.image != blank %}
+              <div class="relative w-full h-full">
+                {{
+                  block.settings.image
+                  | image_url: width: 3840
+                  | image_tag: class: 'w-full h-full object-cover', loading: 'lazy', sizes: '100vw'
+                }}
+                <div class="absolute inset-0 flex items-center justify-end pr-16">
+                  <div class="text-right">
+                    {% if block.settings.heading != blank %}
+                      <h2 class="text-5xl font-bold mb-2 text-gray-800">{{ block.settings.heading }}</h2>
+                    {% endif %}
+                    {% if block.settings.subheading != blank %}
+                      <p class="text-5xl font-light text-gray-500 mb-4" style="letter-spacing: 0.1em;">
+                        {{ block.settings.subheading }}
+                      </p>
+                    {% endif %}
+                    {% if block.settings.collection_text != blank %}
+                      <p class="text-sm uppercase tracking-widest text-gray-700 mb-4">
+                        {{ block.settings.collection_text }}
+                      </p>
+                    {% endif %}
+                    {% if block.settings.button_label != blank %}
+                      <a
+                        href="{{ block.settings.button_link }}"
+                        class="inline-block bg-black text-white px-6 py-2 uppercase text-sm tracking-wider"
+                      >
+                        {{ block.settings.button_label }}
+                      </a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                <span class="text-gray-500">{{ 'image' | placeholder_svg_tag: 'w-1/2 h-1/2' }}</span>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- Navigation buttons -->
+    {% if section.settings.show_navigation %}
+      <button
+        type="button"
+        class="absolute top-1/2 left-4 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md"
+        data-carousel-prev
+      >
+        <span class="sr-only">Previous</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="absolute top-1/2 right-4 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md"
+        data-carousel-next
+      >
+        <span class="sr-only">Next</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    {% endif %}
+
+    <!-- Indicators -->
+    {% if section.settings.show_indicators %}
+      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+        {% for block in section.blocks %}
+          {% if block.type == 'slide' %}
+            <button
+              type="button"
+              class="w-2 h-2 rounded-full bg-white opacity-50 {% if forloop.first %}opacity-100{% endif %}"
+              data-carousel-indicator="{{ forloop.index0 }}"
+            ></button>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const carousels = document.querySelectorAll('[data-carousel]');
+
+    carousels.forEach((carousel) => {
+      const slides = carousel.querySelectorAll('[data-slide]');
+      const prevButton = carousel.querySelector('[data-carousel-prev]');
+      const nextButton = carousel.querySelector('[data-carousel-next]');
+      const indicators = carousel.querySelectorAll('[data-carousel-indicator]');
+
+      let currentSlide = 0;
+      const slideCount = slides.length;
+      let autoRotateInterval = null;
+
+      function showSlide(index) {
+        // Hide all slides
+        slides.forEach((slide) => {
+          slide.classList.remove('opacity-100');
+          slide.classList.add('opacity-0');
+        });
+
+        // Show the current slide
+        slides[index].classList.remove('opacity-0');
+        slides[index].classList.add('opacity-100');
+
+        // Update indicators
+        indicators.forEach((indicator) => {
+          indicator.classList.remove('opacity-100');
+          indicator.classList.add('opacity-50');
+        });
+
+        if (indicators[index]) {
+          indicators[index].classList.remove('opacity-50');
+          indicators[index].classList.add('opacity-100');
+        }
+
+        currentSlide = index;
+      }
+
+      function nextSlide() {
+        showSlide((currentSlide + 1) % slideCount);
+      }
+
+      function prevSlide() {
+        showSlide((currentSlide - 1 + slideCount) % slideCount);
+      }
+
+      // Set up event listeners
+      if (prevButton) {
+        prevButton.addEventListener('click', function () {
+          prevSlide();
+          resetAutoRotate();
+        });
+      }
+
+      if (nextButton) {
+        nextButton.addEventListener('click', function () {
+          nextSlide();
+          resetAutoRotate();
+        });
+      }
+
+      // Set up indicator clicks
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          showSlide(index);
+          resetAutoRotate();
+        });
+      });
+
+      // Auto-rotate functionality
+      function startAutoRotate() {
+        const shouldAutoRotate = carousel.dataset.autoRotate === 'true';
+        if (shouldAutoRotate && slideCount > 1) {
+          const interval = parseInt(carousel.dataset.rotateInterval) || 5000;
+          autoRotateInterval = setInterval(nextSlide, interval);
+        }
+      }
+
+      function resetAutoRotate() {
+        if (autoRotateInterval) {
+          clearInterval(autoRotateInterval);
+          startAutoRotate();
+        }
+      }
+
+      // Initialize auto-rotate
+      startAutoRotate();
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Image Carousel",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to first image"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "large",
+      "label": "Image height"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_position",
+      "options": [
+        {
+          "value": "top-left",
+          "label": "Top left"
+        },
+        {
+          "value": "top-center",
+          "label": "Top center"
+        },
+        {
+          "value": "top-right",
+          "label": "Top right"
+        },
+        {
+          "value": "middle-left",
+          "label": "Middle left"
+        },
+        {
+          "value": "middle-center",
+          "label": "Middle center"
+        },
+        {
+          "value": "middle-right",
+          "label": "Middle right"
+        },
+        {
+          "value": "bottom-left",
+          "label": "Bottom left"
+        },
+        {
+          "value": "bottom-center",
+          "label": "Bottom center"
+        },
+        {
+          "value": "bottom-right",
+          "label": "Bottom right"
+        }
+      ],
+      "default": "bottom-center",
+      "label": "Desktop content position"
+    },
+    {
+      "type": "select",
+      "id": "desktop_content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "right",
+      "label": "Desktop content alignment"
+    },
+    {
+      "type": "checkbox",
+      "id": "auto_rotate",
+      "default": true,
+      "label": "Auto-rotate slides"
+    },
+    {
+      "type": "range",
+      "id": "rotate_interval",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change slides every",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_indicators",
+      "default": true,
+      "label": "Show indicators"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "default": true,
+      "label": "Show navigation arrows"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "ULTIMATE",
+          "label": "Heading"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "subheading",
+          "default": "SALE",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "collection_text",
+          "default": "NEW COLLECTION",
+          "label": "Collection text"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "SHOP NOW",
+          "label": "Button label"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Carousel",
+      "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

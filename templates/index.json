@@ -46,6 +46,46 @@
         "show_text_below": false
       }
     },
+    "image_carousel": {
+      "type": "image-carousel",
+      "blocks": {
+        "slide1": {
+          "type": "slide",
+          "settings": {
+            "heading": "ULTIMATE",
+            "subheading": "SALE",
+            "collection_text": "NEW COLLECTION",
+            "button_label": "SHOP NOW",
+            "button_link": "shopify://collections/all"
+          }
+        },
+        "slide2": {
+          "type": "slide",
+          "settings": {
+            "heading": "SEASONAL",
+            "subheading": "TRENDS",
+            "collection_text": "FEATURED ITEMS",
+            "button_label": "DISCOVER",
+            "button_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "slide1",
+        "slide2"
+      ],
+      "settings": {
+        "image_height": "large",
+        "desktop_content_position": "middle-right",
+        "desktop_content_alignment": "right",
+        "auto_rotate": true,
+        "rotate_interval": 5,
+        "show_indicators": true,
+        "show_navigation": true
+      }
+    },
+
+
     "rich_text": {
       "type": "rich-text",
       "blocks": {
@@ -201,6 +241,7 @@
   },
   "order": [
     "image_banner",
+    "image_carousel",
     "rich_text",
     "featured_collection",
     "collage",
