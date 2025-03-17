@@ -8,7 +8,7 @@
   >
     <div
       class="relative h-full w-full"
-      style="height: {% if section.settings.image_height == 'small' %}300px{% elsif section.settings.image_height == 'medium' %}400px{% elsif section.settings.image_height == 'large' %}800px{% else %}auto{% endif %};"
+      style="height: {% if section.settings.image_height == 'small' %}300px{% elsif section.settings.image_height == 'medium' %}400px{% elsif section.settings.image_height == 'large' %}800px{% else %}auto{% endif %}; {% if section.settings.image_height == 'large' %}max-height: 800px; min-height: 350px;{% endif %}"
     >
       {% for block in section.blocks %}
         {% if block.type == 'slide' %}
@@ -23,25 +23,30 @@
                   | image_url: width: 3840
                   | image_tag: class: 'w-full h-full object-cover', loading: 'lazy', sizes: '100vw'
                 }}
-                <div class="absolute inset-0 flex items-center justify-end pr-16">
+                <div class="absolute inset-0 flex items-center justify-end md:pr-16 pr-6">
                   <div class="text-right">
                     {% if block.settings.heading != blank %}
-                      <h2 class="text-5xl font-bold mb-2 text-gray-800">{{ block.settings.heading }}</h2>
+                      <h2 class="md:text-5xl text-3xl font-bold mb-1 md:mb-2 text-gray-800">
+                        {{ block.settings.heading }}
+                      </h2>
                     {% endif %}
                     {% if block.settings.subheading != blank %}
-                      <p class="text-5xl font-light text-gray-500 mb-4" style="letter-spacing: 0.1em;">
+                      <p
+                        class="md:text-5xl text-3xl font-light text-gray-500 mb-2 md:mb-4"
+                        style="letter-spacing: 0.1em;"
+                      >
                         {{ block.settings.subheading }}
                       </p>
                     {% endif %}
                     {% if block.settings.collection_text != blank %}
-                      <p class="text-sm uppercase tracking-widest text-gray-700 mb-4">
+                      <p class="text-xs md:text-sm uppercase tracking-widest text-gray-700 mb-2 md:mb-4">
                         {{ block.settings.collection_text }}
                       </p>
                     {% endif %}
                     {% if block.settings.button_label != blank %}
                       <a
                         href="{{ block.settings.button_link }}"
-                        class="inline-block bg-black text-white px-6 py-2 uppercase text-sm tracking-wider"
+                        class="inline-block bg-black text-white px-4 py-1 md:px-6 md:py-2 uppercase text-xs md:text-sm tracking-wider"
                       >
                         {{ block.settings.button_label }}
                       </a>
@@ -63,34 +68,38 @@
     {% if section.settings.show_navigation %}
       <button
         type="button"
-        class="absolute top-1/2 left-4 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md"
+        class="absolute top-1/2 left-2 md:left-[45px] -translate-y-1/2 z-10 bg-white rounded-full p-1 md:p-2 shadow-md"
         data-carousel-prev
       >
         <span class="sr-only">Previous</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
+          <path d="M7.06689 16.6865H25.7336" stroke="#383323" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.06689 16.6865L15.0669 24.6865" stroke="#383323" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M7.06689 16.6865L15.0669 8.68652" stroke="#383323" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       <button
         type="button"
-        class="absolute top-1/2 right-4 -translate-y-1/2 z-10 bg-white rounded-full p-2 shadow-md"
+        class="absolute top-1/2 right-2 md:right-[45px] -translate-y-1/2 z-10 bg-white rounded-full p-1 md:p-2 shadow-md"
         data-carousel-next
       >
         <span class="sr-only">Next</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33" fill="none">
+          <path d="M6.729 16.6865H25.3957" stroke="#141718" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.396 24.6865L25.396 16.6865" stroke="#141718" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M17.396 8.68652L25.396 16.6865" stroke="#141718" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
     {% endif %}
 
     <!-- Indicators -->
     {% if section.settings.show_indicators %}
-      <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+      <div class="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
         {% for block in section.blocks %}
           {% if block.type == 'slide' %}
             <button
               type="button"
-              class="w-2 h-2 rounded-full bg-white opacity-50 {% if forloop.first %}opacity-100{% endif %}"
+              class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white opacity-50 {% if forloop.first %}opacity-100{% endif %}"
               data-carousel-indicator="{{ forloop.index0 }}"
             ></button>
           {% endif %}
@@ -99,6 +108,14 @@
     {% endif %}
   </div>
 </section>
+
+<style>
+  @media screen and (max-width: 768px) {
+    #ImageCarousel-{{ section.id }} .relative.h-full.w-full {
+      height: 350px !important;
+    }
+  }
+</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
