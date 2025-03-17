@@ -32,5 +32,6 @@
 }
 
 .container {
+  width: var(--page-width);
   @apply container mx-auto;
 }
