@@ -23,30 +23,41 @@
                   | image_url: width: 3840
                   | image_tag: class: 'w-full h-full object-cover', loading: 'lazy', sizes: '100vw'
                 }}
-                <div class="absolute inset-0 flex items-center justify-end md:pr-16 pr-6">
-                  <div class="text-right">
+                <div class="absolute inset-0 flex items-center justify-end md:pr-[250px] pr-6">
+                  <div class="flex flex-col items-center justify-center ">
                     {% if block.settings.heading != blank %}
-                      <h2 class="md:text-5xl text-3xl font-bold mb-1 md:mb-2 text-gray-800">
+                      <p class="text-[#2E2E2E] font-poppins font-[500] md:text-[64px] text-[30px] leading-[64px]">
                         {{ block.settings.heading }}
-                      </h2>
+                      </p>
                     {% endif %}
                     {% if block.settings.subheading != blank %}
                       <p
-                        class="md:text-5xl text-3xl font-light text-gray-500 mb-2 md:mb-4"
-                        style="letter-spacing: 0.1em;"
+                        class="md:text-[120px] text-[40px] font-light text-gray-500  font-poppins"
+                        style="
+                          text-align: center;
+                          -webkit-text-stroke-width: 1px;
+                          -webkit-text-stroke-color: #2E2E2E;
+                          color: transparent;
+                          font-family: Poppins;
+
+                          font-style: normal;
+                          font-weight: 500;
+                          line-height: 100%;
+                          letter-spacing: 0.1em;
+                        "
                       >
                         {{ block.settings.subheading }}
                       </p>
                     {% endif %}
                     {% if block.settings.collection_text != blank %}
-                      <p class="text-xs md:text-sm uppercase tracking-widest text-gray-700 mb-2 md:mb-4">
+                      <p class="text-[#484848] text-center font-poppins md:text-[16px] text-[10px] font-normal leading-normal tracking-[1.6px] uppercase">
                         {{ block.settings.collection_text }}
                       </p>
                     {% endif %}
                     {% if block.settings.button_label != blank %}
                       <a
                         href="{{ block.settings.button_link }}"
-                        class="inline-block bg-black text-white px-4 py-1 md:px-6 md:py-2 uppercase text-xs md:text-sm tracking-wider"
+                        class="flex md:w-[200px] w-[100px] md:h-[48px] h-[24px] px-[20px] py-[13px] justify-center items-center gap-[8px] rounded-[6.323px] bg-[#000] text-[#FFF] text-center font-poppins md:text-[16px] text-[10px] font-medium leading-[100%] shadow-[0px_12.646px_22.13px_0px_rgba(0,0,0,0.15)] mt-[16px]"
                       >
                         {{ block.settings.button_label }}
                       </a>
@@ -68,7 +79,7 @@
     {% if section.settings.show_navigation %}
       <button
         type="button"
-        class="absolute top-1/2 left-2 md:left-[45px] -translate-y-1/2 z-10 bg-white rounded-full p-1 md:p-2 shadow-md"
+        class="absolute top-1/2 left-2 md:left-[45px] -translate-y-1/2  bg-white rounded-full p-1 md:p-2 shadow-md"
         data-carousel-prev
       >
         <span class="sr-only">Previous</span>
@@ -80,7 +91,7 @@
       </button>
       <button
         type="button"
-        class="absolute top-1/2 right-2 md:right-[45px] -translate-y-1/2 z-10 bg-white rounded-full p-1 md:p-2 shadow-md"
+        class="absolute top-1/2 right-2 md:right-[45px] -translate-y-1/2  bg-white rounded-full p-1 md:p-2 shadow-md"
         data-carousel-next
       >
         <span class="sr-only">Next</span>
@@ -99,7 +110,7 @@
           {% if block.type == 'slide' %}
             <button
               type="button"
-              class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white opacity-50 {% if forloop.first %}opacity-100{% endif %}"
+              class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white opacity-50 {% if forloop.first %}opacity-100{% endif %}  "
               data-carousel-indicator="{{ forloop.index0 }}"
             ></button>
           {% endif %}
