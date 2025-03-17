@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Volkhov&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-poppins: 'Poppins', sans-serif;
+  --font-volkhov: 'Volkhov', serif;
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1240px;
+  --breakpoint-2xl: 1554px;
+
+  --color-black-60: rgba(0, 0, 0, 0.6);
+  --color-black-40: rgba(0, 0, 0, 0.4);
+  --color-black-20: rgba(0, 0, 0, 0.2);
+  --color-black-10: rgba(0, 0, 0, 0.1);
+  --color-discount-bg: rgba(255, 51, 51, 0.1);
+  --color-discount: #ff3333;
+  --color-primary: #484848;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+.container {
+  @apply container mx-auto;
+}
