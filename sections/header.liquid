@@ -185,9 +185,11 @@
     {%- liquid
       if section.settings.menu != blank
         if section.settings.menu_type_desktop == 'dropdown'
-          render 'header-dropdown-menu'
+          assign menu_position = section.settings.menu_position
+          render 'header-dropdown-menu', menu_position: menu_position
         elsif section.settings.menu_type_desktop != 'drawer'
-          render 'header-mega-menu'
+          assign menu_position = section.settings.menu_position
+          render 'header-mega-menu', menu_position: menu_position
         endif
       endif
     %}
@@ -503,6 +505,26 @@
       "default": "middle-left",
       "label": "t:sections.header.settings.logo_position.label",
       "info": "t:sections.header.settings.logo_help.content"
+    },
+    {
+      "type": "select",
+      "id": "menu_position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Menu Position"
     },
     {
       "type": "select",
