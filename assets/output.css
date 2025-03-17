@@ -9,6 +9,7 @@
       "Courier New", monospace;
     --color-red-500: oklch(0.637 0.237 25.331);
     --spacing: 0.25rem;
+    --font-weight-normal: 400;
     --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -26,6 +27,8 @@
     --default-mono-font-variation-settings: var(
       --font-mono--font-variation-settings
     );
+    --font-volkhov: 'Volkhov', serif;
+    --color-primary: #484848;
   }
 }
 @layer base {
@@ -437,8 +440,14 @@
   .min-h-screen {
     min-height: 100vh;
   }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
+  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
+  }
+  .w-2 {
+    width: calc(var(--spacing) * 2);
   }
   .w-screen {
     width: 100vw;
@@ -1266,9 +1275,26 @@
   .align-top {
     vertical-align: top;
   }
+  .font-volkhov {
+    font-family: var(--font-volkhov);
+  }
+  .text-\[32px\] {
+    font-size: 32px;
+  }
+  .text-\[52px\] {
+    font-size: 52px;
+  }
+  .leading-\[52px\] {
+    --tw-leading: 52px;
+    line-height: 52px;
+  }
   .leading-none {
     --tw-leading: 1;
     line-height: 1;
+  }
+  .font-normal {
+    --tw-font-weight: var(--font-weight-normal);
+    font-weight: var(--font-weight-normal);
   }
   .text-balance {
     text-wrap: balance;
@@ -1342,6 +1368,9 @@
   }
   .\[color\:red\]\/50\! {
     color: color-mix(in oklab, red 50%, transparent) !important;
+  }
+  .text-primary {
+    color: var(--color-primary);
   }
   .capitalize {
     text-transform: capitalize;
@@ -1781,6 +1810,17 @@
   .transform-view {
     transform-box: view-box;
   }
+  .lg\:text-\[52px\] {
+    @media (width >= 1024px) {
+      font-size: 52px;
+    }
+  }
+  .lg\:leading-\[52px\] {
+    @media (width >= 1024px) {
+      --tw-leading: 52px;
+      line-height: 52px;
+    }
+  }
 }
 .container {
   width: 100%;
@@ -1899,6 +1939,10 @@
   initial-value: 0;
 }
 @property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
   syntax: "*";
   inherits: false;
 }
