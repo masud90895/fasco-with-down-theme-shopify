@@ -394,6 +394,9 @@
   .py-\[13px\] {
     padding-block: 13px;
   }
+  .py-\[85px\] {
+    padding-block: 85px;
+  }
   .pr-6 {
     padding-right: calc(var(--spacing) * 6);
   }

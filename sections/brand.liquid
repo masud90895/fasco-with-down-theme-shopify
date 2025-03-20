@@ -1,0 +1,85 @@
+{% if section.settings.show_brand %}
+  <div class=" page-width">
+    <div class="brand-grid py-[85px]">
+      {% for block in section.blocks %}
+        <div class="brand-item" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.brand_link }}">
+            {% if block.settings.brand_image %}
+              {{
+                block.settings.brand_image
+                | img_url: '300x'
+                | img_tag: block.settings.brand_image.alt, 'brand-image'
+              }}
+            {% endif %}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  .brand-section {
+    padding: 40px 0;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: center;
+  }
+
+  .brand-item {
+    text-align: center;
+  }
+
+  .brand-image {
+    max-width: 100%;
+    height: auto;
+    transition: opacity 0.3s ease;
+  }
+
+  .brand-image:hover {
+    opacity: 0.8;
+  }
+</style>
+
+{% comment %} brand schema {% endcomment %}
+{% schema %}
+{
+  "name": "Brand",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_brand",
+      "label": "Show Brand",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Brand Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "brand_image",
+          "label": "Brand Image"
+        },
+        {
+          "type": "url",
+          "id": "brand_link",
+          "label": "Brand Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 5,
+  "presets": [
+    {
+      "name": "Brand"
+    }
+  ]
+}
+{% endschema %}

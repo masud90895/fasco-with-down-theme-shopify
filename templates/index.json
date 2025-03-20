@@ -38,6 +38,30 @@
         "show_navigation": true
       }
     },
+    "brand": {
+      "type": "brand",
+      "blocks": {
+        "brand1": {
+          "type": "image",
+          "settings": {
+            "brand_image": "shopify://shop_images/your_brand_image_1",
+            "brand_link": "/collections/brand1"
+          }
+        },
+        "brand2": {
+          "type": "image",
+          "settings": {
+            "brand_image": "shopify://shop_images/your_brand_image_2",
+            "brand_link": "/collections/brand2"
+          }
+        }
+      },
+      "block_order": [
+        "brand1",
+        "brand2"
+      ],
+      "settings": {}
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -100,6 +124,7 @@
   },
   "order": [
     "image_carousel",
+    "brand",
     "featured_collection",
     "collage",
  
