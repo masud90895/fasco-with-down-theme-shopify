@@ -47,6 +47,15 @@
   text-underline-offset: 14px;
 }
 
+.footer-link {
+  color: #8a8a8a;
+  font-family: Poppins;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
 .footer-block__details-content {
   font-size: 0.9rem;
 }
