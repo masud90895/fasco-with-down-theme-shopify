@@ -1,3 +1,10 @@
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>
+
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
@@ -59,16 +66,19 @@
 -%}
 
 <div
-  class="color-{{ section.settings.color_scheme }} isolate gradient"
+  class="color-{{ section.settings.color_scheme }} isolate gradient "
 >
   <div
     class="collection{% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %} section-{{ section.id }}-padding{% if section.settings.full_width %} collection--full-width{% endif %}"
     id="collection-{{ section.id }}"
     data-id="{{ section.id }}"
   >
-    <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %}">
+    <div class="collection__title title-wrapper title-wrapper--no-top-margin page-width{% if show_mobile_slider %} title-wrapper--self-padded-tablet-down{% endif %}{% if show_desktop_slider %} collection__title--desktop-slider{% endif %} text-center my-[40px]  ">
       {%- if section.settings.title != blank -%}
-        <h2 class="title inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <h2
+          class="title inline-richtext  {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          style="font-family: Volkhov"
+        >
           {{ section.settings.title }}
         </h2>
       {%- endif -%}
@@ -76,12 +86,26 @@
         or section.settings.show_description
         and section.settings.collection.description != empty
       -%}
-        <div class="collection__description {{ section.settings.description_style }} rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div class="collection__description {{ section.settings.description_style }} rte{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %} w-[650px] mx-auto">
           {%- if section.settings.show_description -%}
             {{ section.settings.collection.description }}
           {%- else -%}
             {{ section.settings.description -}}
           {%- endif %}
+        </div>
+      {%- endif -%}
+
+      {% comment %} Dynamic collection list {% endcomment %}
+      {%- if section.settings.show_collection_list -%}
+        <div class="flex justify-center gap-4 mb-8 overflow-x-auto">
+          {%- for collection_item in section.settings.collection_list -%}
+            <a
+              href="{{ collection_item.url }}"
+              class="px-6 py-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition-colors cursor-pointer"
+            >
+              {{ collection_item.title }}
+            </a>
+          {%- endfor -%}
         </div>
       {%- endif -%}
     </div>
@@ -260,13 +284,14 @@
           "label": "t:sections.all.heading_size.options__5.label"
         }
       ],
-      "default": "h1",
+      "default": "h2",
       "label": "t:sections.all.heading_size.label"
     },
     {
       "type": "richtext",
       "id": "description",
-      "label": "t:sections.featured-collection.settings.description.label"
+      "label": "t:sections.featured-collection.settings.description.label",
+      "default": "<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>"
     },
     {
       "type": "checkbox",
@@ -505,6 +530,22 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Collection List"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_list",
+      "label": "Show collection list",
+      "default": true
+    },
+    {
+      "type": "collection_list",
+      "id": "collection_list",
+      "label": "Collections",
+      "limit": 12
     }
   ],
   "presets": [

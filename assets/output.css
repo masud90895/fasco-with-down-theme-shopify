@@ -352,6 +352,9 @@
   .my-1 {
     margin-block: calc(var(--spacing) * 1);
   }
+  .my-\[40px\] {
+    margin-block: 40px;
+  }
   .mt-1 {
     margin-top: calc(var(--spacing) * 1);
   }
@@ -376,6 +379,9 @@
   .mt-\[24px\] {
     margin-top: 24px;
   }
+  .mt-\[40px\] {
+    margin-top: 40px;
+  }
   .-mb-16 {
     margin-bottom: calc(var(--spacing) * -16);
   }
@@ -399,6 +405,9 @@
   }
   .mb-12 {
     margin-bottom: calc(var(--spacing) * 12);
+  }
+  .ml-1 {
+    margin-left: calc(var(--spacing) * 1);
   }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
@@ -523,6 +532,15 @@
   .w-\[366px\] {
     width: 366px;
   }
+  .w-\[500px\] {
+    width: 500px;
+  }
+  .w-\[600px\] {
+    width: 600px;
+  }
+  .w-\[650px\] {
+    width: 650px;
+  }
   .w-full {
     width: 100%;
   }
@@ -543,6 +561,9 @@
   }
   .max-w-\[366px\] {
     max-width: 366px;
+  }
+  .max-w-\[500px\] {
+    max-width: 500px;
   }
   .max-w-\[1200px\] {
     max-width: 1200px;
@@ -730,6 +751,9 @@
   .overflow-hidden {
     overflow: hidden;
   }
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
   .overflow-x-scroll {
     overflow-x: scroll;
   }
@@ -806,8 +830,14 @@
   .bg-gray-300 {
     background-color: var(--color-gray-300);
   }
+  .bg-gray-900 {
+    background-color: var(--color-gray-900);
+  }
   .bg-green-50 {
     background-color: var(--color-green-50);
+  }
+  .bg-primary {
+    background-color: var(--color-primary);
   }
   .bg-red-50 {
     background-color: var(--color-red-50);
@@ -962,6 +992,9 @@
   }
   .text-right {
     text-align: right;
+  }
+  .\!font-volkhov {
+    font-family: var(--font-volkhov) !important;
   }
   .font-\[Poppins\] {
     font-family: Poppins;
@@ -1367,6 +1400,13 @@
       }
     }
   }
+  .hover\:bg-gray-300 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-gray-300);
+      }
+    }
+  }
   .hover\:bg-gray-800 {
     &:hover {
       @media (hover: hover) {
@@ -1695,6 +1735,11 @@
   .md\:min-w-\[calc\(33\.333\%-16px\)\] {
     @media (width >= 768px) {
       min-width: calc(33.333% - 16px);
+    }
+  }
+  .md\:grid-cols-2 {
+    @media (width >= 768px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
   .md\:grid-cols-3 {
