@@ -1,6 +1,6 @@
 {% if section.settings.show_brand %}
   <div class=" page-width ">
-    <div class="brand-grid py-[85px]">
+    <div class="brand-grid md:py-[85px] py-[40px]">
       {% for block in section.blocks %}
         <div class="brand-item" {{ block.shopify_attributes }}>
           <a href="{{ block.settings.brand_link }}">

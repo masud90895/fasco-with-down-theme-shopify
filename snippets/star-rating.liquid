@@ -1,0 +1,52 @@
+{% assign rating_decimal = rating | round: 1 %}
+{% assign rating_whole = rating_decimal | floor %}
+{% assign rating_decimal_part = rating_decimal | minus: rating_whole %}
+{% assign next_star = rating_whole | plus: 1 %}
+
+<div class="flex">
+  {% for i in (1..5) %}
+    {% if i <= rating_whole %}
+      <svg
+        class="md:w-6 md:h-6 w-4 h-4 text-amber-400"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    {% elsif i == next_star and rating_decimal_part >= 0.3 and rating_decimal_part <= 0.7 %}
+      <svg
+        class="md:w-6 md:h-6 w-4 h-4 text-amber-400"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#half-star)"/>
+        <defs>
+          <linearGradient id="half-star" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="50%" stop-color="currentColor"/>
+            <stop offset="50%" stop-color="#e5e7eb"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    {% elsif i == next_star and rating_decimal_part > 0.7 %}
+      <svg
+        class="md:w-6 md:h-6 w-4 h-4 text-amber-400"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    {% else %}
+      <svg
+        class="md:w-6 md:h-6 w-4 h-4 text-gray-200"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+      </svg>
+    {% endif %}
+  {% endfor %}
+</div>
