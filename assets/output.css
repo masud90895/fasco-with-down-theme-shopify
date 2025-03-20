@@ -1732,6 +1732,11 @@
       width: 300px;
     }
   }
+  .md\:w-\[650px\] {
+    @media (width >= 768px) {
+      width: 650px;
+    }
+  }
   .md\:min-w-\[calc\(33\.333\%-16px\)\] {
     @media (width >= 768px) {
       min-width: calc(33.333% - 16px);
