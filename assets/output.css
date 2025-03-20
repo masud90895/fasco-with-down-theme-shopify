@@ -999,6 +999,12 @@
   .font-\[Poppins\] {
     font-family: Poppins;
   }
+  .font-\[Tenor_Sans\] {
+    font-family: Tenor Sans;
+  }
+  .font-\[Tw_Cen_MT_Std\] {
+    font-family: Tw Cen MT Std;
+  }
   .font-poppins {
     font-family: var(--font-poppins);
   }
@@ -1055,6 +1061,9 @@
   .text-\[24px\] {
     font-size: 24px;
   }
+  .text-\[28px\] {
+    font-size: 28px;
+  }
   .text-\[30px\] {
     font-size: 30px;
   }
@@ -1072,9 +1081,17 @@
     --tw-leading: calc(var(--spacing) * 5);
     line-height: calc(var(--spacing) * 5);
   }
+  .leading-\[24px\] {
+    --tw-leading: 24px;
+    line-height: 24px;
+  }
   .leading-\[26px\] {
     --tw-leading: 26px;
     line-height: 26px;
+  }
+  .leading-\[40px\] {
+    --tw-leading: 40px;
+    line-height: 40px;
   }
   .leading-\[64px\] {
     --tw-leading: 64px;
@@ -1128,11 +1145,20 @@
     --tw-tracking: 1.6px;
     letter-spacing: 1.6px;
   }
+  .text-\[\#0A4857\] {
+    color: #0A4857;
+  }
   .text-\[\#2E2E2E\] {
     color: #2E2E2E;
   }
+  .text-\[\#2F4156\] {
+    color: #2F4156;
+  }
   .text-\[\#8A8A8A\] {
     color: #8A8A8A;
+  }
+  .text-\[\#383323\] {
+    color: #383323;
   }
   .text-\[\#484848\] {
     color: #484848;
@@ -1600,6 +1626,11 @@
   .sm\:text-\[24px\] {
     @media (width >= 640px) {
       font-size: 24px;
+    }
+  }
+  .sm\:text-\[32px\] {
+    @media (width >= 640px) {
+      font-size: 32px;
     }
   }
   .sm\:text-\[40px\] {
