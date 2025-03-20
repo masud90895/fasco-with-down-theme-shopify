@@ -108,7 +108,18 @@
                       </p>
                     {%- endif -%}
 
-                    {%- if block.settings.button_label != blank and block.settings.button_link != blank -%}
+                    {%- if block.settings.button_label != blank
+                      and block.settings.button_link != blank
+                      and block.settings.is_button
+                    -%}
+                      <a
+                        href="{{ block.settings.button_link }}"
+                        class="button  "
+                      >
+                        {{ block.settings.button_label }}
+                      </a>
+
+                    {%- else -%}
                       <div class="flex items-center gap-2 underline text-[{{ block.settings.button_color }}] font-volkhov text-[14px] sm:text-[16px] font-normal leading-[24px]">
                         <a
                           href="{{ block.settings.button_link }}"
@@ -395,6 +406,12 @@
           "id": "button_link",
           "label": "Button Link",
           "default": "/"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_button",
+          "label": "Is Button",
+          "default": false
         }
       ]
     },

@@ -61,6 +61,7 @@
     --leading-normal: 1.5;
     --radius-md: 0.375rem;
     --radius-lg: 0.5rem;
+    --radius-3xl: 1.5rem;
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --default-transition-duration: 150ms;
@@ -759,6 +760,9 @@
   }
   .rounded {
     border-radius: 0.25rem;
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
   }
   .rounded-\[6\.323px\] {
     border-radius: 6.323px;
