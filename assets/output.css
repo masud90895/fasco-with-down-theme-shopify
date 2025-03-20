@@ -7,6 +7,8 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-500: oklch(0.637 0.237 25.331);
+    --color-green-500: oklch(0.723 0.219 149.579);
     --color-gray-50: oklch(0.985 0.002 247.839);
     --color-gray-200: oklch(0.928 0.006 264.531);
     --color-gray-500: oklch(0.551 0.027 264.364);
@@ -283,6 +285,9 @@
   .mt-\[16px\] {
     margin-top: 16px;
   }
+  .mt-\[24px\] {
+    margin-top: 24px;
+  }
   .mb-12 {
     margin-bottom: calc(var(--spacing) * 12);
   }
@@ -316,6 +321,15 @@
   .h-\[24px\] {
     height: 24px;
   }
+  .h-\[40px\] {
+    height: 40px;
+  }
+  .h-\[80px\] {
+    height: 80px;
+  }
+  .h-\[244px\] {
+    height: 244px;
+  }
   .h-auto {
     height: auto;
   }
@@ -337,6 +351,9 @@
   .w-\[100px\] {
     width: 100px;
   }
+  .w-\[366px\] {
+    width: 366px;
+  }
   .w-full {
     width: 100%;
   }
@@ -348,6 +365,9 @@
   }
   .max-w-\[200px\] {
     max-width: 200px;
+  }
+  .max-w-\[366px\] {
+    max-width: 366px;
   }
   .max-w-\[1200px\] {
     max-width: 1200px;
@@ -395,6 +415,9 @@
   .items-center {
     align-items: center;
   }
+  .justify-between {
+    justify-content: space-between;
+  }
   .justify-center {
     justify-content: center;
   }
@@ -403,6 +426,9 @@
   }
   .justify-items-center {
     justify-items: center;
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
   }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
@@ -437,6 +463,12 @@
   .rounded-\[6\.323px\] {
     border-radius: 6.323px;
   }
+  .rounded-\[16px\] {
+    border-radius: 16px;
+  }
+  .rounded-\[24px\] {
+    border-radius: 24px;
+  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
@@ -446,6 +478,18 @@
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
+  }
+  .border-\[\#E0E0E0\] {
+    border-color: #E0E0E0;
+  }
+  .border-gray-200 {
+    border-color: var(--color-gray-200);
+  }
+  .border-white {
+    border-color: var(--color-white);
+  }
+  .border-white\/90 {
+    border-color: color-mix(in oklab, var(--color-white) 90%, transparent);
   }
   .bg-\[\#000\] {
     background-color: #000;
@@ -484,8 +528,17 @@
     --tw-gradient-to: var(--color-white);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
+  .object-contain {
+    object-fit: contain;
+  }
   .object-cover {
     object-fit: cover;
+  }
+  .object-fill {
+    object-fit: fill;
+  }
+  .object-center {
+    object-position: center;
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
@@ -542,6 +595,12 @@
   }
   .text-\[10px\] {
     font-size: 10px;
+  }
+  .text-\[16px\] {
+    font-size: 16px;
+  }
+  .text-\[24px\] {
+    font-size: 24px;
   }
   .text-\[30px\] {
     font-size: 30px;
@@ -606,8 +665,14 @@
   .text-gray-900 {
     color: var(--color-gray-900);
   }
+  .text-green-500 {
+    color: var(--color-green-500);
+  }
   .text-primary {
     color: var(--color-primary);
+  }
+  .text-red-500 {
+    color: var(--color-red-500);
   }
   .capitalize {
     text-transform: capitalize;
