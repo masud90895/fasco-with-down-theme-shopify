@@ -12,7 +12,8 @@
           "label": "Blur"
         },
         "corner_radius": {
-          "label": "Corner radius"
+          "label": "Corner radius",
+          "default": "8px"
         },
         "horizontal_offset": {
           "label": "Horizontal offset"
