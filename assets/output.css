@@ -1671,6 +1671,11 @@
       height: calc(var(--spacing) * 8);
     }
   }
+  .lg\:w-1\/4 {
+    @media (width >= 1024px) {
+      width: calc(1/4 * 100%);
+    }
+  }
   .lg\:w-8 {
     @media (width >= 1024px) {
       width: calc(var(--spacing) * 8);
