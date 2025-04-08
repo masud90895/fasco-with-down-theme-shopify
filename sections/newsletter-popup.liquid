@@ -1,0 +1,145 @@
+{{ 'newsletter-modal.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'newsletter-modal.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .newsletter-popup-section {
+    display: block; /* Hide the wrapper section, only modal is shown */
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+{%- endstyle -%}
+
+<div class="newsletter-popup-section">
+  {% render 'newsletter-modal',
+    heading: section.settings.heading,
+    subheading: section.settings.subheading,
+    discount_code: section.settings.discount_code,
+    button_text: section.settings.button_text,
+    image: section.settings.popup_image,
+    delay_seconds: section.settings.delay_seconds,
+    show_once_per_session: section.settings.show_once_per_session,
+    auto_show: section.settings.auto_show
+  %}
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter Popup",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "auto_show",
+      "default": false,
+      "label": "Auto-display popup",
+      "info": "If unchecked, the popup will not automatically display. You can add a button to trigger it."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Get 10% Off Your First Order",
+      "label": "Heading"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "default": "Subscribe to our newsletter for exclusive offers and updates",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "Discount code",
+      "info": "Leave blank to hide the discount code section"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "default": "Subscribe",
+      "label": "Button text"
+    },
+    {
+      "type": "image_picker",
+      "id": "popup_image",
+      "label": "Image",
+      "info": "Displays at 50% width on desktop, full width on mobile"
+    },
+    {
+      "type": "range",
+      "id": "delay_seconds",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 5,
+      "label": "Delay (seconds)",
+      "info": "Time to wait before showing the popup"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_once_per_session",
+      "default": true,
+      "label": "Show once per session",
+      "info": "If checked, the popup will only show once per browsing session"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "close_icon_color",
+      "label": "Close icon color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 40,
+      "label": "Overlay opacity",
+      "info": "Controls the darkness of the background overlay"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Popup",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+{% comment %}
+  Renders a button that opens the newsletter popup.
+
+  Accepts:
+  - button_text: {String} The text to display on the button (default: "Subscribe")
+  - button_style: {String} Style for the button: 'primary', 'secondary', or 'link' (default: 'primary')
+  - button_class: {String} Additional classes to add to the button (optional)
+
+  Usage:
+  {% render 'newsletter-popup-button',
+    button_text: 'Get Discount',
+    button_style: 'primary',
+    button_class: 'my-custom-class'
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign button_text = button_text | default: 'Subscribe to Newsletter'
+  assign button_style = button_style | default: 'primary'
+
+  case button_style
+    when 'primary'
+      assign button_classes = 'button'
+    when 'secondary'
+      assign button_classes = 'button button--secondary'
+    when 'link'
+      assign button_classes = 'button button--tertiary'
+    else
+      assign button_classes = 'button'
+  endcase
+
+  if button_class != blank
+    assign button_classes = button_classes | append: ' ' | append: button_class
+  endif
+-%}
+
+<button
+  type="button"
+  class="{{ button_classes }} newsletter-popup-trigger"
+  onclick="openNewsletterModal()"
+  aria-label="Open newsletter signup"
+>
+  {{ button_text }}
+</button>

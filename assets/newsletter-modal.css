@@ -1,0 +1,237 @@
+.newsletter-modal {
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5000;
+}
+
+.newsletter-modal[open] {
+  display: block;
+}
+
+html.overflow-hidden,
+body.overflow-hidden {
+  overflow: hidden;
+  touch-action: none;
+  -webkit-overflow-scrolling: none;
+  overscroll-behavior: none;
+}
+
+.newsletter-modal__dialog {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  padding: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 5001;
+}
+
+.newsletter-modal .modal-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5000;
+}
+
+.newsletter-modal__content {
+  background: #ffffff;
+  border-radius: 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  color: #333333;
+  margin: auto;
+  max-height: 90vh;
+  max-width: 800px;
+  overflow: auto;
+  position: relative;
+  width: 100%;
+  z-index: 5002;
+  padding: 0;
+}
+
+.newsletter-modal__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.newsletter-modal__image-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.newsletter-modal__image-container img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.newsletter-modal__text-content {
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.newsletter-modal__close-button {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  height: 44px;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 44px;
+  z-index: 5003;
+}
+
+.newsletter-modal__close-button svg {
+  height: 16px;
+  width: 16px;
+  color: #333333;
+}
+
+.newsletter-modal__heading {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333333;
+  font-weight: 500;
+  text-align: center;
+}
+
+.newsletter-modal__subheading {
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #666666;
+  text-align: center;
+}
+
+.newsletter-modal__discount {
+  background-color: #f7f7f7;
+  border: 1px dashed #cccccc;
+  border-radius: 0;
+  display: inline-block;
+  margin: 10px 0 20px;
+  padding: 10px 15px;
+  text-align: center;
+  width: 100%;
+}
+
+.newsletter-modal__discount-code {
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  margin-left: 5px;
+  color: #333333;
+}
+
+.newsletter-form__wrapper {
+  margin-top: 15px;
+}
+
+.newsletter-form__field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.newsletter-form .field {
+  width: 100%;
+}
+
+.newsletter-form .field__input {
+  border: 1px solid #e1e1e1;
+  border-radius: 0;
+  padding: 12px 15px;
+  width: 100%;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+.newsletter-form__button {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  border-radius: 0;
+  padding: 12px 15px;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.newsletter-form__button:hover {
+  background-color: #333333;
+}
+
+.newsletter-form__message--success {
+  margin-top: 15px;
+  color: #1c7c54;
+  font-weight: 400;
+  text-align: center;
+  font-size: 14px;
+}
+
+@media screen and (min-width: 750px) {
+  .newsletter-modal__content {
+    max-width: 800px;
+  }
+
+  .newsletter-modal__container {
+    flex-direction: row;
+  }
+
+  .newsletter-modal__image-container {
+    width: 50%;
+    max-height: 550px;
+  }
+
+  .newsletter-modal__image-container img {
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .newsletter-modal__text-content {
+    width: 50%;
+    padding: 40px;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .newsletter-modal__content {
+    margin: 20px;
+    max-width: calc(100% - 40px);
+  }
+
+  .newsletter-modal__text-content {
+    padding: 30px 20px;
+  }
+
+  .newsletter-modal__heading {
+    font-size: 20px;
+  }
+
+  .newsletter-modal__subheading {
+    font-size: 13px;
+  }
+}

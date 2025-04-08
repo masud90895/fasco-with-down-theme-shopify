@@ -1,0 +1,218 @@
+{% comment %}
+  Renders a newsletter/promotional popup modal.
+
+  Accepts:
+  - heading: {String} Headline text for the modal
+  - subheading: {String} Subheading text for the modal (optional)
+  - discount_code: {String} Promotional discount code to display (optional)
+  - image: {Object} Image to display in modal (optional)
+  - button_text: {String} Text for submit button (optional)
+  - delay_seconds: {Integer} Delay in seconds before showing popup (default: 5)
+  - show_once_per_session: {Boolean} If true, only show popup once per browser session (default: true)
+  - auto_show: {Boolean} If true, automatically show the popup after delay (default: false)
+
+  Usage:
+  {% render 'newsletter-modal',
+    heading: 'Get 10% Off Your First Order',
+    subheading: 'Subscribe to our newsletter for exclusive offers',
+    discount_code: 'WELCOME10',
+    button_text: 'Subscribe',
+    image: section.settings.popup_image,
+    delay_seconds: 5,
+    show_once_per_session: true,
+    auto_show: false
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign button_text = button_text | default: 'Subscribe'
+  assign delay_seconds = delay_seconds | default: 5
+  assign show_once_per_session = show_once_per_session | default: true
+  assign auto_show = auto_show | default: false
+  assign modal_id = 'newsletter-modal'
+
+  assign background_color = section.settings.background_color | default: '#ffffff'
+  assign text_color = section.settings.text_color | default: '#333333'
+  assign button_color = section.settings.button_color | default: '#000000'
+  assign button_text_color = section.settings.button_text_color | default: '#ffffff'
+  assign close_icon_color = section.settings.close_icon_color | default: '#333333'
+  assign overlay_opacity = section.settings.overlay_opacity | default: 40 | divided_by: 100.0
+-%}
+
+<style>
+  #{{ modal_id }} .newsletter-modal__content {
+    background: {{ background_color }};
+    color: {{ text_color }};
+  }
+
+  #{{ modal_id }} .newsletter-modal__heading,
+  #{{ modal_id }} .newsletter-modal__discount-code,
+  #{{ modal_id }} .newsletter-modal__discount-label {
+    color: {{ text_color }};
+  }
+
+  #{{ modal_id }} .newsletter-modal__subheading {
+    color: {{ text_color | color_modify: 'alpha', 0.8 }};
+  }
+
+  #{{ modal_id }} .newsletter-form__button {
+    background-color: {{ button_color }};
+    color: {{ button_text_color }};
+  }
+
+  #{{ modal_id }} .newsletter-form__button:hover {
+    background-color: {{ button_color | color_darken: 10 }};
+  }
+
+  #{{ modal_id }} .newsletter-modal__close-button svg {
+    color: {{ close_icon_color }};
+  }
+
+  #{{ modal_id }} .modal-overlay {
+    background-color: rgba(0, 0, 0, {{ overlay_opacity }});
+  }
+</style>
+
+<newsletter-modal
+  id="{{ modal_id }}"
+  class="newsletter-modal media-modal"
+  data-delay-seconds="{{ delay_seconds }}"
+  data-show-once-per-session="{{ show_once_per_session }}"
+  data-auto-show="{{ auto_show }}"
+>
+  <div
+    class="newsletter-modal__dialog"
+    role="dialog"
+    aria-label="Newsletter signup"
+    aria-modal="true"
+    tabindex="-1"
+  >
+    <div class="modal-overlay"></div>
+    <div class="newsletter-modal__content">
+      <button
+        type="button"
+        class="newsletter-modal__close-button"
+        aria-label="{{ 'accessibility.close' | t }}"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          focusable="false"
+          class="icon icon-close"
+          fill="none"
+          viewBox="0 0 18 17"
+        >
+          <path d="M.865 15.978a.5.5 0 00.707.707l7.433-7.431 7.579 7.282a.501.501 0 00.846-.37.5.5 0 00-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 10-.707-.708L8.991 7.853 1.413.573a.5.5 0 10-.693.72l7.563 7.268-7.418 7.417z" fill="currentColor">
+        </svg>
+      </button>
+
+      <div class="newsletter-modal__container">
+        {% if image %}
+          <div class="newsletter-modal__image-container">
+            <img
+              srcset="
+                {{ image | image_url: width: 550 }} 550w,
+                {{ image | image_url: width: 720 }} 720w,
+                {{ image | image_url: width: 990 }} 990w
+              "
+              src="{{ image | image_url: width: 550 }}"
+              alt="{{ image.alt | escape }}"
+              width="{{ image.width }}"
+              height="{{ image.height }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+
+        <div class="newsletter-modal__text-content">
+          <h2 class="newsletter-modal__heading">{{ heading | default: 'Get 10% off Your Next Order' }}</h2>
+
+          <div class="newsletter-modal__subheading">
+            {{ subheading | default: 'Sign up and get launches, tips, and sales straight to your inbox weekly.' }}
+          </div>
+
+          {% if discount_code != blank %}
+            <div class="newsletter-modal__discount">
+              <span class="newsletter-modal__discount-label">Discount Code:</span>
+              <span class="newsletter-modal__discount-code">{{ discount_code }}</span>
+            </div>
+          {% endif %}
+
+          <div class="newsletter-form__wrapper">
+            {%- form 'customer', id: 'newsletter-form', class: 'newsletter-form' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <div class="newsletter-form__field-wrapper">
+                <div class="field">
+                  <input
+                    id="newsletter-modal-email"
+                    type="email"
+                    name="contact[email]"
+                    class="field__input"
+                    value="{{ form.email }}"
+                    aria-required="true"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    autocomplete="email"
+                    {% if form.errors %}
+                      autofocus
+                      aria-invalid="true"
+                      aria-describedby="newsletter-modal-error"
+                    {% endif %}
+                    placeholder="Your e-mail"
+                    required
+                  >
+                </div>
+                <button
+                  type="submit"
+                  class="newsletter-form__button"
+                  name="commit"
+                >
+                  {{ button_text }}
+                </button>
+              </div>
+              {%- if form.errors -%}
+                <div id="newsletter-modal-error" class="form__message">
+                  {%- for error in form.errors -%}
+                    <small class="form-error">
+                      {%- if error.code == 'email_invalid' or error.code == 'invalid_email' -%}
+                        Please enter a valid email address
+                      {%- else -%}
+                        {{ error.message }}
+                      {%- endif -%}
+                    </small>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              {%- if form.posted_successfully? -%}
+                <div class="form__message newsletter-form__message--success">
+                  {{ 'newsletter.success' | t }}
+                </div>
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</newsletter-modal>
+
+<script>
+  // Function to open newsletter modal from any button
+  function openNewsletterModal() {
+    const modal = document.getElementById('{{ modal_id }}');
+    if (modal) {
+      modal.open();
+    }
+  }
+
+  // Add global function for external access
+  window.openNewsletterModal = openNewsletterModal;
+</script>
+
+{% comment %}
+  To open the newsletter modal from a button, add this to your template:
+
+  <button type="button" class="button" onclick="openNewsletterModal()">
+    Open Newsletter
+  </button>
+{% endcomment %}
