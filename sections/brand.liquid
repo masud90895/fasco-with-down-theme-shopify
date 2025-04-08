@@ -42,14 +42,14 @@
         </div>
 
         <ul
-          class="brand-slider slider slider--everywhere grid grid--1-col px-0 mb-5 list-none"
+          class="brand-slider slider slider--everywhere flex  px-0 mb-5 list-none"
           id="Slider-{{ section.id }}"
           role="list"
         >
           {% for block in section.blocks %}
             <li
               id="Slide-{{ section.id }}-{{ forloop.index }}"
-              class="slider__slide text-center p-4 mr-4"
+              class="slider__slide text-center p-4 mr-4 lg:w-1/6"
               {{ block.shopify_attributes }}
             >
               <a
