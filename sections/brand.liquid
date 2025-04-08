@@ -1,51 +1,102 @@
 {% if section.settings.show_brand %}
-  <div class=" page-width ">
-    <div class="brand-grid md:py-[85px] py-[40px]">
-      {% for block in section.blocks %}
-        <div class="brand-item" {{ block.shopify_attributes }}>
-          <a href="{{ block.settings.brand_link }}">
-            {% if block.settings.brand_image %}
-              {{
-                block.settings.brand_image
-                | img_url: '300x'
-                | img_tag: block.settings.brand_image.alt, 'brand-image'
-              }}
-            {% endif %}
-          </a>
+  <div class="page-width {% if section.settings.display_type == 'carousel' %} slider-mobile-gutter{% endif %} ">
+    {% if section.settings.display_type == 'carousel' %}
+      <slider-component class="slider-component">
+        <div class="flex items-end justify-end mt-[20px]">
+          {% if section.blocks.size > 1 %}
+            <div class="slider-buttons no-js-hidden flex items-center">
+              <button
+                type="button"
+                class="slider-button slider-button--prev flex items-center justify-center rounded-full bg-white shadow-sm border border-gray-100 text-black mx-2 transition-all hover:shadow-md"
+                name="previous"
+                aria-label="{{ 'general.slider.previous_slide' | t }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                <span class="flex w-6 h-6 transform rotate-180 mt-[8px]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </button>
+              <div class="slider-counter min-w-[44px] text-center text-sm font-medium">
+                <span class="slider-counter--current font-semibold">1</span>
+                <span aria-hidden="true"> / </span>
+                <span class="visually-hidden">{{ 'general.slider.of' | t }}</span>
+                <span class="slider-counter--total">{{ section.blocks.size }}</span>
+              </div>
+              <button
+                type="button"
+                class="slider-button slider-button--next flex items-center justify-center  rounded-full bg-white shadow-sm border border-gray-100 text-black mx-2 transition-all hover:shadow-md"
+                name="next"
+                aria-label="{{ 'general.slider.next_slide' | t }}"
+                aria-controls="Slider-{{ section.id }}"
+              >
+                <span class="flex w-6 h-6 mb-[8px] ">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          {% endif %}
         </div>
-      {% endfor %}
-    </div>
+
+        <ul
+          class="brand-slider slider slider--everywhere grid grid--1-col px-0 mb-5 list-none"
+          id="Slider-{{ section.id }}"
+          role="list"
+        >
+          {% for block in section.blocks %}
+            <li
+              id="Slide-{{ section.id }}-{{ forloop.index }}"
+              class="slider__slide text-center p-4 mr-4"
+              {{ block.shopify_attributes }}
+            >
+              <a
+                href="{{ block.settings.brand_link }}"
+                class="flex items-center justify-center h-[120px] md:h-[150px] px-4"
+              >
+                {% if block.settings.brand_image %}
+                  {{
+                    block.settings.brand_image
+                    | img_url: '300x'
+                    | img_tag: block.settings.brand_image.alt,
+                      'max-w-full h-auto max-h-[100px] md:max-h-[120px] object-contain transition-all duration-200 hover:opacity-80 filter saturate-[0.85] hover:saturate-100'
+                  }}
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </slider-component>
+    {% else %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 items-center py-[40px] md:py-[85px]">
+        {% for block in section.blocks %}
+          <div class="text-center p-4" {{ block.shopify_attributes }}>
+            <a
+              href="{{ block.settings.brand_link }}"
+              class="flex items-center justify-center h-[120px] md:h-[150px] px-4"
+            >
+              {% if block.settings.brand_image %}
+                {{
+                  block.settings.brand_image
+                  | img_url: '300x'
+                  | img_tag: block.settings.brand_image.alt,
+                    'max-w-full h-auto max-h-[100px] md:max-h-[120px] object-contain transition-all duration-200 hover:opacity-80 filter saturate-[0.85] hover:saturate-100'
+                }}
+              {% endif %}
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 {% endif %}
 
-<style>
-  .brand-section {
-    padding: 40px 0;
-  }
+{% if section.settings.display_type == 'carousel' %}
+  {{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{% endif %}
 
-  .brand-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    align-items: center;
-  }
-
-  .brand-item {
-    text-align: center;
-  }
-
-  .brand-image {
-    max-width: 100%;
-    height: auto;
-    transition: opacity 0.3s ease;
-  }
-
-  .brand-image:hover {
-    opacity: 0.8;
-  }
-</style>
-
-{% comment %} brand schema {% endcomment %}
 {% schema %}
 {
   "name": "Brand",
@@ -55,6 +106,22 @@
       "id": "show_brand",
       "label": "Show Brand",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "display_type",
+      "label": "Display Type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel"
+        }
+      ],
+      "default": "grid"
     }
   ],
   "blocks": [
@@ -75,7 +142,6 @@
       ]
     }
   ],
-  "max_blocks": 6,
   "presets": [
     {
       "name": "Brand"
